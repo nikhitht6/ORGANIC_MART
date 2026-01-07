@@ -1,0 +1,177 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Farmer Dashboard | OrganicMart{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    
+    <section class="dashboard-hero">
+        <div class="container">
+            <h2>
+                Welcome, {{ request.user.username }} 🌾
+            </h2>
+            <p>
+                Manage listings, track orders & grow your organic business
+            </p>
+        </div>
+    </section>
+
+    <section class="container my-5">
+
+        
+        <div class="action-strip mb-5">
+
+            <a href="{% url 'add_product' %}" class="action-card">
+                <span>➕</span>
+                <div>
+                    <strong>Add Product</strong>
+                    <small>Create new listing</small>
+                </div>
+            </a>
+
+            <a href="{% url 'farmer_products' %}" class="action-card">
+                <span>📦</span>
+                <div>
+                    <strong>My Products</strong>
+                    <small>Edit stock & pricing</small>
+                </div>
+            </a>
+
+            <a href="{% url 'farmer_orders' %}" class="action-card">
+                <span>📥</span>
+                <div>
+                    <strong>Orders</strong>
+                    <small>Process deliveries</small>
+                </div>
+            </a>
+
+            <a href="{% url 'profile_view' %}" class="action-card">
+                <span>👤</span>
+                <div>
+                    <strong>My Profile</strong>
+                    <small>Account details</small>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- MY PRODUCTS -->
+            <div class="col-md-6">
+                <div class="section-card h-100">
+
+                    <div class="section-header">
+                        <h5>🌱 My Products</h5>
+                        <small>Your active listings</small>
+                    </div>
+
+                    {% if products %}
+                        <ul class="list-group list-group-flush">
+
+                            {% for product in products %}
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <img src="{{ product.image.url }}"
+                                             class="rounded me-3"
+                                             style="width:60px;height:60px;object-fit:cover">
+
+                                        <div>
+                                            
+                                            <a href="{% url 'product_detail' product.id %}"
+                                               class="fw-bold text-decoration-none text-dark">
+                                                {{ product.name }}
+                                            </a><br>
+
+                                            <small class="text-muted">
+                                                Stock: {{ product.stock }} {{ product.unit }}
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <span class="fw-bold text-success">
+                                            ₹{{ product.price }}
+                                        </span>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            You haven’t added any products yet.
+                        </p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            
+            <div class="col-md-6">
+                <div class="section-card h-100">
+
+                    <div class="section-header">
+                        <h5>📥 Orders Received</h5>
+                        <small>Latest customer orders</small>
+                    </div>
+
+                    {% if orders %}
+                        <ul class="list-group list-group-flush">
+
+                            {% for order in orders %}
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ order.product.image.url }}"
+                                             class="rounded me-3"
+                                             style="width:50px;height:50px;object-fit:cover">
+
+                                        <div>
+                                            
+                                            <a href="{% url 'product_detail' order.product.id %}"
+                                                class="fw-bold text-decoration-none text-dark">
+                                                {{ order.product.name }}
+                                            </a><br>
+                                            
+                                            <small class="text-muted">
+                                                Qty: {{ order.quantity }} {{ order.product.unit }}
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                    <span class="badge
+                                        {% if order.order.status == 'Pending' %} bg-warning text-dark
+                                        {% elif order.order.status == 'Shipped' %} bg-info
+                                        {% elif order.order.status == 'Delivered' %} bg-success
+                                        {% else %} bg-danger
+                                        {% endif %}">
+                                        {{ order.order.status }}
+                                    </span>
+
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            No orders received yet.
+                        </p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Approval Pending | OrganicMart{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container">
+        <h2 class="fw-bold text-white">Verification in Progress ⏳</h2>
+        <p class="text-white-50">
+            Your farmer account is under review
+        </p>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-sm p-5 dashboard-card text-center">
+
+                <p class="text-muted mb-4">
+                    Thank you for registering as a farmer on <strong>OrganicMart</strong>.
+                    Your account is currently under administrative review.
+                </p>
+
+                <div class="alert alert-warning pulse text-start">
+                    <strong>Offline Verification Process:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>Keep your <strong>farmer certificate / documents</strong> ready</li>
+                        <li>You may be <strong>contacted by phone</strong></li>
+                        <li>Organic authenticity may be <strong>verified offline</strong></li>
+                        <li>Seasonal produce availability is checked</li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-info mt-4 text-start">
+                    Once verified, you will be able to:
+                    <ul class="mb-0 mt-2">
+                        <li>Add and manage products</li>
+                        <li>Receive and fulfill orders</li>
+                        <li>Operate as a verified farmer</li>
+                    </ul>
+                </div>
+
+                <p class="small text-muted mt-3">
+                    Verification typically takes <strong>24–48 hours</strong>.
+                </p>
+
+                <a href="{% url 'logout' %}" class="btn btn-outline-danger mt-3">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}

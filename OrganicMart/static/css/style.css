@@ -1,0 +1,457 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f6fdf8;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+h1, h2 {
+    letter-spacing: 0.5px;
+}
+
+section {
+    scroll-margin-top: 80px;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-brand {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-success {
+    background-color: #2e7d32;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #1b5e20;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+    min-height: 55vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=80");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+/* =========================
+   FEATURE INFO CARDS
+========================= */
+
+.feature-card {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    background: #e8f5e9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin: auto;
+}
+
+/* =================================================
+   CATEGORY CARDS — STAGGER + HOVER 
+================================================= */
+
+.category-card {
+    display: block;
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    opacity: 0;
+    animation: categoryFade 0.6s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.15s);
+
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+@keyframes categoryFade {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.category-card:hover {
+    transform: translateY(-16px);
+    box-shadow: 0 22px 36px rgba(0,0,0,0.18);
+}
+
+
+
+.category-icon {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 16px;
+
+    background: #e8f5e9;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 54px;
+    line-height: 1;
+
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.35) rotate(5deg);
+    background-color: #c8e6c9;
+}
+
+/* =================================================
+   FEATURED PRODUCT CARDS
+================================================= */
+
+.product-card {
+    position: relative;
+    height: 100%;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+    opacity: 0;
+    animation: productFade 0.6s ease forwards;
+}
+
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.25s; }
+.product-card:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes productFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 22px 40px rgba(0,0,0,0.18);
+}
+
+/* Image zoom */
+.product-card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.08);
+}
+
+/* Button lift */
+.product-card .btn {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .btn {
+    transform: translateY(-3px);
+}
+
+/* SHINE EFFECT */
+
+.product-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.35),
+        transparent
+    );
+    transition: left 0.7s ease;
+}
+
+.product-card:hover::before {
+    left: 120%;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    font-size: 0.9rem;
+}
+
+
+/* =========================
+  OFFCANVAS MENU
+========================= */
+
+.app-offcanvas {
+    width: 300px;
+    border-left: none;
+    box-shadow: -8px 0 25px rgba(0,0,0,0.15);
+}
+
+.app-offcanvas .offcanvas-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+}
+
+.menu-section {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin: 16px 0 8px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 10px;
+    border-radius: 10px;
+
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: #f1f8f4;
+    transform: translateX(4px);
+    color: #2e7d32;
+}
+
+.menu-icon {
+    font-size: 20px;
+    width: 26px;
+    text-align: center;
+}
+
+
+/* =========================
+   AUTH PAGES (LOGIN / REGISTER)
+========================= */
+
+.auth-page {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=80");
+    background-size: cover;
+    background-position: center;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.auth-card h3 {
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================
+   DASHBOARD CARD EFFECTS
+   ========================= */
+
+.dashboard-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/* ================= CUSTOMER & FARMER DASHBOARD ================= */
+.dashboard-page {
+    background: #f1f3f6;
+}
+
+.dashboard-hero {
+    min-height: 45vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=80");
+    padding: 50px 0;
+    background-position: center;
+    color: #fff;
+}
+
+.dashboard-hero h2 {
+    font-weight: 700;
+}
+
+.dashboard-hero p {
+    opacity: .9;
+}
+
+.action-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.action-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 0 4px 14px rgba(0,0,0,.08);
+    transition: transform .2s;
+}
+
+.action-card:hover {
+    transform: translateY(-3px);
+}
+
+.action-card span {
+    font-size: 26px;
+}
+
+.section-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+.category-box {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    transition: all .2s;
+}
+
+.category-box:hover {
+    background: #e8f5e9;
+}
+
+.category-icon {
+    font-size: 36px;
+}
+
+.product-box {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    transition: transform .2s;
+}
+
+.product-box:hover {
+    transform: translateY(-4px);
+}
+
+.product-box img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 12px;
+    text-align: center;
+}
+
+.product-info .price {
+    color: #2e7d32;
+    font-weight: 700;
+}
+
+.product-info a {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+

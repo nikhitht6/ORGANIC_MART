@@ -1,0 +1,129 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Order Details | OrganicMart{% endblock %}
+
+{% block content %}
+<section class="container my-5 fade-in">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold">Order #{{ order.id }}</h3>
+        <a href="{% url 'customer_orders' %}"
+           class="btn btn-outline-dark btn-sm">
+            ← Back
+        </a>
+    </div>
+
+    
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <p class="mb-1">
+                        <strong>Order Date:</strong>
+                        {{ order.created_at|date:"M d, Y" }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Payment Method:</strong>
+                        {{ order.payment_method }}
+                    </p>
+
+                    
+                    <p class="mb-0">
+                        <strong>Order Status:</strong>
+                        <span class="badge bg-secondary ms-1">
+                            📦 Multiple items — delivered separately
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>Shipping Address:</strong></p>
+                    <p class="text-muted mb-0">
+                        {{ order.shipping_address }}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ORDER ITEMS -->
+    <div class="card shadow-sm">
+        <div class="card-header fw-semibold">
+            Items in this order
+        </div>
+
+        <div class="card-body">
+
+            {% for item in items %}
+            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+
+                
+                <div class="d-flex align-items-center">
+                    <img src="{{ item.product.image.url }}"
+                         alt="{{ item.product.name }}"
+                         class="rounded me-3"
+                         style="width: 80px; height: 80px; object-fit: cover;">
+
+                    <div>
+                        <h6 class="mb-1 fw-semibold">
+                            {{ item.product.name }}
+                        </h6>
+
+                        <div class="text-muted small">
+                            Sold by {{ item.product.farmer.username }}
+                        </div>
+
+                        <div class="small mt-1">
+                            Quantity: {{ item.quantity }} {{ item.product.unit }}
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="text-center">
+                    {% if item.status == "Pending" %}
+                        <span class="badge bg-warning text-dark">
+                            🕒 Pending
+                        </span>
+                    {% elif item.status == "Shipped" %}
+                        <span class="badge bg-info">
+                            🚚 On the way
+                        </span>
+                    {% elif item.status == "Delivered" %}
+                        <span class="badge bg-success">
+                            ✅ Delivered
+                        </span>
+                    {% elif item.status == "Cancelled" %}
+                        <span class="badge bg-danger">
+                            ❌ Cancelled
+                        </span>
+                    {% endif %}
+                </div>
+
+                
+                <div class="text-end">
+                    <div class="fw-semibold">
+                        ₹{{ item.product.price }} × {{ item.quantity }}
+                    </div>
+                    <div class="text-success fw-bold">
+                        ₹{{ item.subtotal }}
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- TOTAL -->
+        <div class="card-footer text-end fw-bold fs-5">
+            Total Amount: ₹{{ order.total_amount }}
+        </div>
+    </div>
+
+</section>
+{% endblock %}

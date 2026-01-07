@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Manage Users | OrganicMart Admin{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold text-white">Manage Users 👥</h2>
+            <p class="text-white-50 mb-0">
+                User roles, verification & account restrictions
+            </p>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm">
+            ← Back
+        </a>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <table class="table mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Verification</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for profile in profiles %}
+                    <tr>
+
+                        <!-- USERNAME -->
+                        <td>{{ profile.user.username }}</td>
+
+                        <!-- ROLE -->
+                        <td>
+                            <span class="badge
+                                {% if profile.role == 'ADMIN' %} bg-danger
+                                {% elif profile.role == 'FARMER' %} bg-success
+                                {% else %} bg-secondary {% endif %}">
+                                {{ profile.role }}
+                            </span>
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+                            {% if profile.is_blocked %}
+                                <span class="badge bg-danger">Blocked</span>
+                            {% else %}
+                                <span class="badge bg-success">Active</span>
+                            {% endif %}
+                        </td>
+
+                        
+                        <td>
+                            {% if profile.role == 'FARMER' %}
+                                {% if profile.is_verified %}
+                                    <span class="badge bg-success">
+                                        Verified
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                {% endif %}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td>
+
+                            {# 🔒 ADMIN PROTECTION #}
+                            {% if profile.role == 'ADMIN' %}
+                                —
+                            {% else %}
+
+                                {# BLOCK / UNBLOCK (FARMER + CUSTOMER) #}
+                                {% if profile.is_blocked %}
+                                    <a href="{% url 'toggle_user_block' profile.id %}"
+                                       class="btn btn-sm btn-success mb-1">
+                                        Unblock
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'toggle_user_block' profile.id %}"
+                                       class="btn btn-sm btn-danger mb-1">
+                                        Block
+                                    </a>
+                                {% endif %}
+
+                                {# VERIFY (FARMER ONLY) #}
+                                {% if profile.role == 'FARMER' and not profile.is_verified %}
+                                    <br>
+                                    <a href="{% url 'verify_farmer' profile.id %}"
+                                       class="btn btn-sm btn-outline-success mt-1">
+                                        Verify
+                                    </a>
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5"
+                            class="text-center text-muted py-4">
+                            No users found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}

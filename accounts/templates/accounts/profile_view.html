@@ -1,0 +1,93 @@
+{% extends 'core/base.html' %}
+
+{% block title %}My Profile | OrganicMart{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container">
+        <h2 class="fw-bold text-white mb-1">
+            My Profile
+        </h2>
+        <p class="text-white-50 mb-0">
+            Manage your personal information and contact details
+        </p>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            
+            <div class="card shadow-sm border-0">
+
+                
+                <div class="card-header bg-light fw-bold">
+                    👤 Account Information
+                </div>
+
+                
+                <div class="card-body p-4">
+
+                    <!-- USERNAME -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted fw-semibold">
+                            Username
+                        </div>
+                        <div class="col-sm-8">
+                            {{ request.user.username }}
+                        </div>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted fw-semibold">
+                            Email
+                        </div>
+                        <div class="col-sm-8">
+                            {{ request.user.email|default:"—" }}
+                        </div>
+                    </div>
+
+                    <!-- PHONE -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted fw-semibold">
+                            Phone Number
+                        </div>
+                        <div class="col-sm-8">
+                            {{ profile.phone|default:"Not added" }}
+                        </div>
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="row mb-0">
+                        <div class="col-sm-4 text-muted fw-semibold">
+                            Address
+                        </div>
+                        <div class="col-sm-8">
+                            {{ profile.address|default:"Not added" }}
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                    <a href="{% url 'profile_edit' %}"
+                       class="btn btn-outline-success px-4">
+                        ✏️ Edit Profile
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

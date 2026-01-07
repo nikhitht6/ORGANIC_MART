@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<section class="container my-5 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card shadow-lg border-0 p-5 text-center">
+
+                
+                <div class="mb-3">
+                    <span class="display-4 text-success">✔️</span>
+                </div>
+
+                <!-- TITLE -->
+                <h2 class="fw-bold text-success mb-2">
+                    Order Placed Successfully
+                </h2>
+
+                <!-- MESSAGE -->
+                <p class="text-muted mb-4">
+                    Thank you for shopping with <strong>OrganicMart</strong>.<br>
+                    Your order has been confirmed and will be processed shortly.
+                </p>
+
+                
+                <div class="alert alert-light border text-start mb-4">
+                    <ul class="mb-0 small">
+                        <li>Your order is being prepared by the seller</li>
+                        <li>You will be notified once it is shipped</li>
+                        <li>Delivery details are available in <strong>My Orders</strong></li>
+                    </ul>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+                    <a href="{% url 'customer_orders' %}"
+                       class="btn btn-success px-4">
+                        📦 View My Orders
+                    </a>
+
+                    <a href="{% url 'product_list' %}"
+                       class="btn btn-outline-dark px-4">
+                        Continue Shopping
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

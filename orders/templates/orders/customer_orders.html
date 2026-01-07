@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+
+{% block title %}My Orders | OrganicMart{% endblock %}
+
+{% block content %}
+<section class="container my-5 fade-in">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">📦 My Orders</h2>
+        <a href="{% url 'customer_dashboard' %}"
+           class="btn btn-outline-dark btn-sm">
+            ← Back
+        </a>
+    </div>
+
+    {% if orders %}
+        {% for order in orders %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <strong>Order #{{ order.id }}</strong>
+                        <div class="text-muted small">
+                            Placed on {{ order.created_at|date:"M d, Y" }}
+                        </div>
+                    </div>
+
+                    <div class="fw-bold">
+                        ₹{{ order.total_amount }}
+                    </div>
+                </div>
+
+                
+                <div class="mb-3">
+                    {% if order.status == "Pending" %}
+                        <span class="badge bg-warning text-dark">
+                            🕒 Order Placed
+                        </span>
+                    {% elif order.status == "Shipped" %}
+                        <span class="badge bg-info">
+                            🚚 On the way
+                        </span>
+                    {% elif order.status == "Delivered" %}
+                        <span class="badge bg-success">
+                            ✅ Delivered
+                        </span>
+                    {% elif order.status == "Cancelled" %}
+                        <span class="badge bg-danger">
+                            ❌ Cancelled
+                        </span>
+                    {% endif %}
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="d-flex gap-2 align-items-center">
+
+                    <!-- VIEW DETAILS -->
+                    <a href="{% url 'customer_order_detail' order.id %}"
+                       class="btn btn-sm btn-outline-primary">
+                        View Details
+                    </a>
+
+                    {% if order.status == "Pending" %}
+                        <a href="{% url 'cancel_order' order.id %}"
+                           class="btn btn-sm btn-outline-danger">
+                            Cancel Order
+                        </a>
+                    {% endif %}
+
+                    <span class="text-muted small ms-auto">
+                        Need help? Contact support
+                    </span>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-light border text-center">
+            <p class="mb-1 fw-semibold">
+                You haven’t placed any orders yet
+            </p>
+            <a href="{% url 'product_list' %}" class="btn btn-success btn-sm">
+                Start Shopping
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}

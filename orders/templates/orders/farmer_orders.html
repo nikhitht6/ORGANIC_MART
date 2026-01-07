@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Orders Received | OrganicMart{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold text-white">Orders Received 📥</h2>
+            <p class="text-white-50 mb-0">
+                Manage customer orders and delivery status
+            </p>
+        </div>
+
+        <a href="{% url 'farmer_dashboard' %}"
+           class="btn btn-outline-light btn-sm">
+            ← Back
+        </a>
+    </div>
+</section>
+
+<section class="container my-5 fade-in">
+
+    {% if orders %}
+        {% for order in orders %}
+        <div class="card shadow-sm mb-4">
+
+            
+            <div class="card-header bg-light">
+                <strong>Order #{{ order.id }}</strong><br>
+                <span class="text-muted small">
+                    Customer: {{ order.user.username }}
+                </span>
+            </div>
+
+            
+            <div class="card-body">
+
+                {% for item in order.items.all %}
+                    {% if item.product.farmer == request.user %}
+
+                    <div class="border rounded p-3 mb-3">
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>{{ item.product.name }}</strong>
+                            <span>
+                                Qty: {{ item.quantity }} {{ item.product.unit }}
+                            </span>
+                        </div>
+
+                        <!-- ITEM STATUS -->
+                        <div class="mb-2">
+                            {% if item.status == "Pending" %}
+                                <span class="badge bg-warning text-dark">🕒 Pending</span>
+                            {% elif item.status == "Shipped" %}
+                                <span class="badge bg-info">🚚 On the way</span>
+                            {% elif item.status == "Delivered" %}
+                                <span class="badge bg-success">✅ Delivered</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- ITEM PRICE -->
+                        <div class="fw-semibold text-success mb-2">
+                            ₹{{ item.subtotal }}
+                        </div>
+
+                        <!-- ITEM ACTIONS -->
+                        <div class="d-flex gap-2 flex-wrap">
+                            {% if item.status == "Pending" %}
+                                <a href="{% url 'update_order_status' item.id 'Shipped' %}"
+                                   class="btn btn-sm btn-warning">
+                                    Mark as Shipped
+                                </a>
+                            {% elif item.status == "Shipped" %}
+                                <a href="{% url 'update_order_status' item.id 'Delivered' %}"
+                                   class="btn btn-sm btn-success">
+                                    Mark as Delivered
+                                </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+                {% endfor %}
+
+                <a href="{% url 'farmer_order_detail' order.id %}"
+                   class="btn btn-sm btn-outline-primary mt-2">
+                    View Order Details
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-light border text-center">
+            <p class="fw-semibold mb-1">
+                No orders received yet
+            </p>
+            <p class="text-muted small">
+                Orders will appear here once customers purchase your products
+            </p>
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

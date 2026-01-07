@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+
+{% block title %}My Products | OrganicMart{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold text-white">My Products 🌾</h2>
+            <p class="text-white-50 mb-0">
+                Manage stock, price and product details
+            </p>
+        </div>
+
+        <a href="{% url 'farmer_dashboard' %}"
+           class="btn btn-outline-light btn-sm">
+            ← Back
+        </a>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+
+    <!-- ADD PRODUCT BUTTON -->
+    <div class="mb-4 text-end">
+        <a href="{% url 'add_product' %}"
+           class="btn btn-success">
+            ➕ Add New Product
+        </a>
+    </div>
+
+    {% if products %}
+        <div class="row g-4">
+
+            {% for p in products %}
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card h-100 shadow-sm product-card">
+
+                    <!-- PRODUCT IMAGE -->
+                    <img src="{{ p.image.url }}"
+                         alt="{{ p.name }}"
+                         class="card-img-top"
+                         style="height:180px;object-fit:cover;">
+
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- PRODUCT NAME -->
+                        <h6 class="fw-bold mb-1">
+                            {{ p.name }}
+                        </h6>
+
+                        <!-- STOCK -->
+                        <p class="mb-1 small">
+                            <strong>Stock:</strong>
+                            {{ p.stock }} {{ p.unit }}
+                        </p>
+
+                        <!-- PRICE -->
+                        <p class="fw-bold text-success mb-3">
+                            ₹{{ p.price }}
+                        </p>
+
+                        <!-- ACTION BUTTONS -->
+                        <div class="d-flex gap-2 mt-auto">
+
+                            <!--  VIEW PRODUCT -->
+                            <a href="{% url 'product_detail' p.id %}"
+                               class="btn btn-outline-success btn-sm w-100">
+                                👁️ View
+                            </a>
+
+                            <!--  EDIT PRODUCT -->
+                            <a href="{% url 'edit_product' p.id %}"
+                               class="btn btn-outline-warning btn-sm w-100">
+                                ✏️ Edit
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+        <div class="alert alert-light border text-center">
+            <p class="fw-semibold mb-1">
+                You haven’t added any products yet
+            </p>
+            <p class="text-muted small">
+                Add your first product to start selling
+            </p>
+
+            <a href="{% url 'add_product' %}"
+               class="btn btn-success btn-sm">
+                Add Product
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

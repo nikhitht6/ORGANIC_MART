@@ -1,0 +1,180 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
+    <div class="container">
+
+        
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+           href="{% url 'home' %}">
+            🥬 OrganicMart
+        </a>
+
+        
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            
+            <ul class="navbar-nav me-auto align-items-lg-center gap-lg-2">
+
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
+                       href="{% url 'product_list' %}">
+                        Products
+                    </a>
+                </li>
+
+            </ul>
+
+            
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                {% if user.is_authenticated %}
+
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard' %}"
+                           class="btn btn-light btn-sm fw-semibold">
+                            📊 Dashboard
+                        </a>
+                    </li>
+
+                    <!-- USER DROPDOWN -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold text-truncate"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           style="max-width: 140px;">
+                            {{ user.username }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'dashboard' %}">
+                                    📊 Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'profile_view' %}">
+                                    👤 Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'view_cart' %}">
+                                    🛒 Cart
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger"
+                                   href="{% url 'logout' %}">
+                                    🚪 Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="btn btn-light btn-sm fw-semibold"
+                           href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm fw-semibold"
+                           href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                
+                <li class="nav-item ms-lg-2">
+                    <button class="btn btn-outline-light btn-sm"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#appMenu">
+                        ☰
+                    </button>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="offcanvas offcanvas-end app-offcanvas" tabindex="-1" id="appMenu">
+    <div class="offcanvas-header">
+        <div>
+            <h5 class="fw-bold mb-0">OrganicMart</h5>
+            <small class="text-muted">Fresh from Farm to Family</small>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+
+        <p class="menu-section">Explore</p>
+        <a href="{% url 'home' %}" class="menu-item">
+            <span class="menu-icon">🏠</span> Home
+        </a>
+        <a href="{% url 'product_list' %}" class="menu-item">
+            <span class="menu-icon">🛒</span> Products
+        </a>
+
+        {% if user.is_authenticated %}
+            <hr>
+            <p class="menu-section">Your Account</p>
+
+            <a href="{% url 'dashboard' %}" class="menu-item">
+                <span class="menu-icon">📊</span> Dashboard
+            </a>
+
+            <a href="{% url 'profile_view' %}" class="menu-item">
+                <span class="menu-icon">👤</span> Profile
+            </a>
+
+            <a href="{% url 'view_cart' %}" class="menu-item">
+                <span class="menu-icon">🛍</span> Cart
+            </a>
+
+            <hr>
+
+            <a href="{% url 'logout' %}" class="menu-item text-danger">
+                <span class="menu-icon">🚪</span> Logout
+            </a>
+
+        {% else %}
+            <hr>
+            <p class="menu-section">Get Started</p>
+
+            <a href="{% url 'login' %}" class="menu-item">
+                <span class="menu-icon">🔑</span> Login
+            </a>
+
+            <a href="{% url 'register' %}" class="menu-item">
+                <span class="menu-icon">📝</span> Register
+            </a>
+
+            <a href="{% url 'register' %}?role=farmer" class="menu-item">
+                <span class="menu-icon">🌾</span> Become a Farmer
+            </a>
+        {% endif %}
+
+    </div>
+</div>

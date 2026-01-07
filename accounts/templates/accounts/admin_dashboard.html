@@ -1,0 +1,161 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Admin Dashboard | OrganicMart{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    
+    <section class="dashboard-hero admin-hero">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <h2>Admin Control Panel 👑</h2>
+                <p>Monitor platform health & manage operations</p>
+            </div>
+
+            <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">
+                Logout
+            </a>
+        </div>
+    </section>
+
+    <section class="container my-5">
+
+        
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <span class="metric-icon">👥</span>
+                    <div>
+                        <small>Total Users</small>
+                        <h3>{{ users_count }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="metric-card success">
+                    <span class="metric-icon">🌾</span>
+                    <div>
+                        <small>Verified Farmers</small>
+                        <h3>{{ farmers_count }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="metric-card info">
+                    <span class="metric-icon">📦</span>
+                    <div>
+                        <small>Total Orders</small>
+                        <h3>{{ orders_count }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="metric-card revenue">
+                    <span class="metric-icon">💰</span>
+                    <div>
+                        <small>Platform Revenue</small>
+                        <h3>₹ {{ revenue }}</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <h5 class="fw-bold mb-3">Admin Actions</h5>
+
+        <div class="action-strip mb-5">
+
+            <a href="{% url 'admin_users' %}" class="action-card admin">
+                <span>👥</span>
+                <div>
+                    <strong>Manage Users</strong>
+                    <small>Roles, block & verify</small>
+                </div>
+            </a>
+
+            <a href="{% url 'admin_orders_view' %}" class="action-card admin">
+                <span>📦</span>
+                <div>
+                    <strong>Orders</strong>
+                    <small>Monitor & control</small>
+                </div>
+            </a>
+
+            <a href="{% url 'admin_reviews' %}" class="action-card admin">
+                <span>⭐</span>
+                <div>
+                    <strong>Reviews</strong>
+                    <small>Approve or reject</small>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="row g-4">
+
+            
+            <div class="col-md-6">
+                <div class="section-card h-100">
+
+                    <div class="section-header">
+                        <h5>🕒 System Activity</h5>
+                        <small>Live platform signals</small>
+                    </div>
+
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item">
+                            📦 New orders placed by customers
+                        </li>
+                        
+                        <li class="list-group-item">
+                            ⭐ Reviews awaiting moderation
+                        </li>
+                        <li class="list-group-item">
+                            👤 New user registrations
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            
+            <div class="col-md-6">
+                <div class="section-card h-100">
+
+                    <div class="section-header">
+                        <h5>🧠 Admin Responsibilities</h5>
+                        <small>What you control</small>
+                    </div>
+
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item">
+                            ✔ Verify farmers & organic authenticity
+                        </li>
+                        <li class="list-group-item">
+                            ✔ Monitor order lifecycle
+                        </li>
+                        <li class="list-group-item">
+                            ✔ Moderate reviews 
+                        </li>
+                        <li class="list-group-item">
+                            ✔ Ensure platform stability
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

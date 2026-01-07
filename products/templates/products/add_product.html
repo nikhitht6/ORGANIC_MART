@@ -1,0 +1,160 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Add Product | OrganicMart{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold text-white mb-1">
+                Add New Product
+            </h2>
+            <p class="text-white-50 mb-0">
+                Create a listing customers can trust
+            </p>
+        </div>
+
+        <a href="{% url 'farmer_products' %}"
+           class="btn btn-outline-light btn-sm">
+            ← Back
+        </a>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- ================= BASIC DETAILS ================= -->
+                        <h6 class="fw-bold mb-3 text-success">
+                            📝 Basic Information
+                        </h6>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Product Name
+                            </label>
+                            <input name="name"
+                                   class="form-control"
+                                   placeholder="e.g. Organic Tomatoes"
+                                   required>
+                            <small class="text-muted">
+                                Use clear, simple product names customers search for
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Category
+                            </label>
+                            <select name="category"
+                                    class="form-select"
+                                    required>
+                                <option value="Vegetables">Vegetables</option>
+                                <option value="Fruits">Fruits</option>
+                                <option value="Grains">Grains</option>
+                                <option value="Dairy">Dairy</option>
+                            </select>
+                        </div>
+
+                        <!-- ================= PRICING ================= -->
+                        <h6 class="fw-bold mb-3 text-success">
+                            💰 Pricing
+                        </h6>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Price (₹)
+                            </label>
+                            <input name="price"
+                                   type="number"
+                                   step="0.01"
+                                   class="form-control"
+                                   placeholder="e.g. 45.00"
+                                   required>
+                            <small class="text-muted">
+                                Set competitive pricing to improve sales
+                            </small>
+                        </div>
+
+                        <!-- ================= INVENTORY ================= -->
+                        <h6 class="fw-bold mb-3 text-success">
+                            📦 Inventory
+                        </h6>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Stock Quantity
+                            </label>
+                            <input name="stock"
+                                   type="number"
+                                   step="0.01"
+                                   class="form-control"
+                                   placeholder="Enter available quantity"
+                                   required>
+                            <small class="text-muted">
+                                Unit is automatically set based on category (kg / units)
+                            </small>
+                        </div>
+
+                        <!-- ================= ADDITIONAL INFO ================= -->
+                        <h6 class="fw-bold mb-3 text-success">
+                            🌱 Additional Details
+                        </h6>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Harvest Date <span class="text-muted">(optional)</span>
+                            </label>
+                            <input name="harvest_date"
+                                   type="date"
+                                   class="form-control">
+                        </div>
+
+                        <!-- ================= IMAGE ================= -->
+                        <h6 class="fw-bold mb-3 text-success">
+                            🖼 Product Image
+                        </h6>
+
+                        <div class="mb-4">
+                            <input name="image"
+                                   type="file"
+                                   class="form-control"
+                                   required>
+                            <small class="text-muted">
+                                Upload a clear image to increase buyer trust
+                            </small>
+                        </div>
+
+                        <!-- ================= ACTIONS ================= -->
+                        <div class="d-flex justify-content-end gap-3 border-top pt-4">
+                            <a href="{% url 'farmer_products' %}"
+                               class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success px-4">
+                                Save Product
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Review Moderation | OrganicMart Admin{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold text-white">Review Moderation ⭐</h2>
+            <p class="text-white-50 mb-0">
+                Approve or hide customer product reviews
+            </p>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="btn btn-outline-light btn-sm">
+            ← Back
+        </a>
+    </div>
+</section>
+
+
+<section class="container my-5 fade-in">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+
+            <table class="table mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>User</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for review in reviews %}
+                    <tr>
+
+                        <!-- PRODUCT -->
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+
+                                <img src="{{ review.product.image.url }}"
+                                     alt="{{ review.product.name }}"
+                                     class="rounded"
+                                     style="width:50px;height:50px;object-fit:cover;">
+
+                                <div>
+                                    <a href="{% url 'product_detail' review.product.id %}"
+                                       target="_blank"
+                                       class="fw-semibold text-decoration-none text-dark">
+                                        {{ review.product.name }}
+                                    </a>
+                                    <div class="small text-muted">
+                                        ₹{{ review.product.price }} / {{ review.product.unit }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <!-- USER -->
+                        <td>
+                            {{ review.user.username }}
+                        </td>
+
+                        <!-- RATING -->
+                        <td>
+                            {% if review.rating <= 2 %}
+                                <span class="badge bg-danger">
+                                    ⭐ {{ review.rating }}/5
+                                </span>
+                            {% elif review.rating == 3 %}
+                                <span class="badge bg-warning text-dark">
+                                    ⭐ 3/5
+                                </span>
+                            {% else %}
+                                <span class="badge bg-success">
+                                    ⭐ {{ review.rating }}/5
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        
+                        <td style="max-width:300px;">
+                            <span class="text-muted">
+                                {{ review.comment }}
+                            </span>
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+                            {% if review.is_approved %}
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    Hidden
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        
+                        <td>
+                            {% if review.is_approved %}
+                                <a href="{% url 'admin_review_action' review.id 'reject' %}"
+                                   class="btn btn-sm btn-outline-danger">
+                                    Reject
+                                </a>
+                            {% else %}
+                                <a href="{% url 'admin_review_action' review.id 'approve' %}"
+                                   class="btn btn-sm btn-outline-success">
+                                    Approve
+                                </a>
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6"
+                            class="text-center text-muted py-4">
+                            No reviews found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

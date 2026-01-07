@@ -1,0 +1,146 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Customer Dashboard | OrganicMart{% endblock %}
+
+{% block content %}
+
+
+<div class="dashboard-page">
+
+    
+    <section class="dashboard-hero">
+        <div class="container">
+            <h2>
+                Welcome back, {{ request.user.username }} 👋
+            </h2>
+            <p>
+                Track orders, discover fresh produce & shop organic with confidence
+            </p>
+        </div>
+    </section>
+
+    <section class="container my-5">
+
+        
+        <div class="action-strip mb-5">
+            <a href="{% url 'product_list' %}" class="action-card">
+                <span>🛒</span>
+                <div>
+                    <strong>Shop Products</strong>
+                    <small>Browse fresh items</small>
+                </div>
+            </a>
+
+            <a href="{% url 'view_cart' %}" class="action-card">
+                <span>🧺</span>
+                <div>
+                    <strong>My Cart</strong>
+                    <small>View items</small>
+                </div>
+            </a>
+
+            <a href="{% url 'customer_orders' %}" class="action-card">
+                <span>📦</span>
+                <div>
+                    <strong>Orders</strong>
+                    <small>Track & history</small>
+                </div>
+            </a>
+
+            <a href="{% url 'profile_view' %}" class="action-card">
+                <span>👤</span>
+                <div>
+                    <strong>Profile</strong>
+                    <small>Manage account</small>
+                </div>
+            </a>
+        </div>
+
+        <!-- SHOP BY CATEGORY -->
+        <div class="section-card mb-5">
+            <div class="section-header">
+                <h5>Shop by Category</h5>
+            </div>
+
+            <div class="row g-4">
+                {% for cat in categories %}
+                <div class="col-6 col-md-3">
+                    <a href="{% url 'product_list' %}?category={{ cat }}"
+                       class="category-box">
+
+                        <div class="category-icon">
+                            {% if cat == "Fruits" %}🍎
+                            {% elif cat == "Vegetables" %}🥦
+                            {% elif cat == "Grains" %}🌾
+                            {% elif cat == "Dairy" %}🥛
+                            {% else %}🛒
+                            {% endif %}
+                        </div>
+
+                        <div class="category-name">
+                            {{ cat }}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- RECOMMENDED -->
+        {% if recommended_products %}
+        <div class="section-card mb-5">
+            <div class="section-header">
+                <h5>Recommended for You</h5>
+                <small>Based on your previous orders</small>
+            </div>
+
+            <div class="row g-4">
+                {% for product in recommended_products %}
+                <div class="col-6 col-md-3">
+                    <div class="product-box">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <div class="product-info">
+                            <strong>{{ product.name }}</strong>
+                            <small>Suggested pick</small>
+                            <a href="{% url 'product_detail' product.id %}">
+                                View Product →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- NEW ARRIVALS -->
+        <div class="section-card">
+            <div class="section-header">
+                <h5>New Arrivals</h5>
+                <small>Recently added products</small>
+            </div>
+
+            <div class="row g-4">
+                {% for product in featured_products %}
+                <div class="col-6 col-md-3">
+                    <div class="product-box">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <div class="product-info">
+                            <strong>{{ product.name }}</strong>
+                            <span class="price">₹{{ product.price }}</span>
+                            <a href="{% url 'product_detail' product.id %}">
+                                View Product →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p class="text-muted">No new arrivals yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+</div>
+
+{% endblock %}
